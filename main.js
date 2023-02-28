@@ -6,11 +6,11 @@ dotenv.config();
 
 const app = express();
 
-var token = jwt.sign({ foo: "bar" }, process.env.PRIVATE_ACCESS_KEY, {
-  algorithm: "RS256",
-});
+app.get("/", async (req, res) => {
+  const token = await jwt.sign({ foo: "bar" }, process.env.PRIVATE_ACCESS_KEY, {
+    algorithm: "RS256",
+  });
 
-app.get("/", (req, res) => {
   res.send(token);
 });
 
