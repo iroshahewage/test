@@ -12,9 +12,13 @@ app.get("/", async (req, res) => {
     const signAsync = util.promisify(jwt.sign);
 
     const payload = { id: 123 };
-    const token = await signAsync(payload, process.env.PRIVATE_ACCESS_KEY, {
-      algorithm: "RS256",
-    });
+    const token = await signAsync(
+      payload,
+      Buffer.from(process.env.PRIVATE_ACCESS_KEY),
+      {
+        algorithm: "RS256",
+      }
+    );
 
     res.send(token);
   } catch (err) {
