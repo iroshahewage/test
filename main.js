@@ -10,13 +10,8 @@ const app = express();
 app.get("/", async (req, res) => {
   const signAsync = util.promisify(jwt.sign);
 
-  const token = await signAsync(
-    { foo: "bar" },
-    process.env.PRIVATE_ACCESS_KEY,
-    {
-      algorithm: "RS256",
-    }
-  );
+  const payload = { id: 123 };
+  const token = await signAsync(payload, privateKey, { algorithm: "RS256" });
 
   res.send(token);
 });
