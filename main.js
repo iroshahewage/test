@@ -1,9 +1,7 @@
 const express = require("express");
-const fs = require("fs");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const util = require("util");
-const privateKey = fs.readFileSync("./pem/private_ket.pem");
 
 dotenv.config();
 
@@ -14,7 +12,7 @@ app.get("/", async (req, res) => {
     const signAsync = util.promisify(jwt.sign);
 
     const payload = { id: 123 };
-    const token = await signAsync(payload, privateKey, {
+    const token = await signAsync(payload, process.env.PRIVATE_ACCESS_KEY, {
       algorithm: "RS256",
     });
 
