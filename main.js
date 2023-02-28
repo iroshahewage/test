@@ -8,12 +8,16 @@ dotenv.config();
 const app = express();
 
 app.get("/", async (req, res) => {
-  const signAsync = util.promisify(jwt.sign);
+  try {
+    const signAsync = util.promisify(jwt.sign);
 
-  const payload = { id: 123 };
-  const token = await signAsync(payload, privateKey, { algorithm: "RS256" });
+    const payload = { id: 123 };
+    const token = await signAsync(payload, privateKey, { algorithm: "RS256" });
 
-  res.send(token);
+    res.send(token);
+  } catch (err) {
+    res.send(err.message);
+  }
 });
 
 app.listen(8000, () => {
